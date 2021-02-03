@@ -1,0 +1,130 @@
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+     include "../db.php";
+     
+     $username = $_POST["username"];
+     $password = $_POST["password"];
+     
+     if (empty($username) || empty($password)) {
+          echo "Please fill the filed";
+     }else {
+          $sql = "SELECT * FROM `userinfo` WHERE username = '$username'";
+          $result = mysqli_query($conn, $sql);
+          $num = mysqli_num_rows($result);
+          if ($num == 1) {
+               while($row = mysqli_fetch_assoc($result)){
+                    if (password_verify($password, $row['password'])) {
+                         header("location: ../index.php");
+                         session_start();
+                         $_SESSION['user_id'] = $row['id'];
+                         
+                         $_SESSION['loggedin'] = true;
+                         $_SESSION['username'] = $username;
+                    }
+               }
+          }
+     }
+}
+
+
+?>
+<!DOCTYPE html>
+<html>
+     <head>
+          <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+          <meta name="viewport" content="width=device-width,  initial-scale=1.0">
+          <title>Lonin and Registration Pages</title>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+          <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+     </head>
+     <body>
+          <header>
+          <div class="logo">
+               <a href="#">IDISCUSE</a>
+          </div>
+          <nav class="nav">
+               <ul>
+                    <li><a href="/idiscuse/index.php">Home</a></li>
+                    <li class="menushow"><a>Catries<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                         <ul class="l">
+                              <li><a href="/idiscuse/index.php#catries">Catries</a></li>
+                              <li><a href="/idiscuse/catries/addcatries.php">Add Catries</a></li>
+                         </ul>
+                    </li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li class="showprofile"><a>Account<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                         <ul class="pm">
+                              <li><a href="/idiscuse/account/profile.php">Profile</a></li>
+                              <li><a href="/idiscuse/account/login.php">Login</a></li>
+                              <li><a href="/idiscuse/account/Signup.php">Register</a></li>
+                              <li><a href="/idiscuse/account/logout.php">logout</a></li>
+                         </ul>
+                    </li>
+                  <!--  <a class="profile" href="account/profile.php"><img src="image/icon/user.png" alt="" /></a>-->
+               </ul>
+               <div class="searchBx">
+                    <form action="" method="get" accept-charset="utf-8">
+                         <input type="search" placeholder="Search Box">
+                         <input class="sbtn" type="submit" name="submit" value="Submit">
+                    </form>
+               </div>
+          </nav>
+          <div id="menu">
+               <div class="line1"></div>
+               <div class="line2"></div>
+               <div class="line3"></div>
+          </div>
+     </header>
+          <div class="main">
+          <div class="card">
+               <h3> Login Now</h3>
+               <div class="registration">
+                    <form action="#" method="POST" accept-charset="utf-8">
+                         
+                         <div class="input-filed">
+                              <i class="fa fa-user" aria-hidden="true"></i>
+                              <input type="text" name="username" id="" value="" placeholder="Username" />
+                         </div>
+                       
+                         <div class="input-filed">
+                              <i class="fa fa-lock" aria-hidden="true"></i>
+                              <input type="password" name="password" id="" value="" placeholder="Password" />
+                         </div>
+                         
+                         <div class="btn">
+                              <input type="submit" value="Login" />
+                         </div>
+                         <div class="paire">
+                              <p>Social Media Icon and tap to <a href="Signup.php">Register</a> Go to Login page</p>
+                         </div>
+                         <div class="social-icon">
+                              <i class="fa fa-facebook" aria-hidden="true"></i>
+                              <i class="fa fa-google" aria-hidden="true"></i>
+                              <i class="fa fa-twitter" aria-hidden="true"></i>
+                              <i class="fa fa-linkedin" aria-hidden="true"></i>
+                         </div>
+                    </form>
+               </div>
+          </div>
+          </div>
+          <script type="text/javascript" charset="utf-8">
+             const header = () => {
+             const menu = document.querySelector('#menu');
+             const nav = document.querySelector('.nav');
+             const list = document.querySelector('.nav li a');
+          
+             menu.addEventListener('click', () => {
+                  nav.classList.toggle('active');
+               
+                  //menu style animations 
+                  menu.classList.toggle('close');
+             });
+       }
+     
+     header();
+        </script>
+     </body>
+</html>
