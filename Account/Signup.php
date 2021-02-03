@@ -119,8 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li><a href="/idiscuse/index.php">Home</a></li>
                     <li class="menushow"><a>Catries<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                          <ul class="l">
-                              <li><a href="/idiscuse/index.php#catries">Catries</a></li>
-                              <li><a href="/idiscuse/catries/addcatries.php">Add Catries</a></li>
+                              <li><a href="/index.php#catries">Catries</a></li>
+                              <li><a href="/catries/addcatries.php">Add Catries</a></li>
                          </ul>
                     </li>
                     <li><a href="#">Services</a></li>
